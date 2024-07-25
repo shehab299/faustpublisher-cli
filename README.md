@@ -1,7 +1,3 @@
-Certainly! Below is the complete README for the Faust Publisher CLI based on the provided information:
-
----
-
 # Faust Publisher CLI
 
 The Faust Publisher CLI is used to publish FAUST packages from the command line. It is built using [oclif](https://oclif.io).
