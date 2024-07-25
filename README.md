@@ -1,6 +1,6 @@
 # Faust Publisher CLI
 
-The Faust Publisher CLI is used to publish FAUST packages from the command line. It is built using [oclif](https://oclif.io).
+The Faust Publisher CLI is used to publish FAUST packages to the FAUST Registry from the command line. It is built using [oclif](https://oclif.io).
 
 <!-- toc -->
 * [Usage](#usage)
