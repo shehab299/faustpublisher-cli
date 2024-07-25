@@ -1,0 +1,31 @@
+{
+  "name": "faustpublisher",
+  "version": "1.0.0",
+  "description": "Publish your faust libraries to the offical faust registry",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shehab khaled",
+  "license": "MIT",
+  "bin": {
+    "faustpublisher": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "faustpublisher",
+    "commands": "./dist/commands",
+    "dirname": "faustpublisher",
+    "topicSeparator": " "
+  },
+  "dependencies": {
+    "@oclif/core": "^4.0.14",
+    "@octokit/auth-oauth-device": "^7.1.1",
+    "@octokit/core": "^6.1.2",
+    "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.42",
+    "ts-node": "^10.9.2"
+  }
+}
