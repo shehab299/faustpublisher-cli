@@ -69,7 +69,7 @@ class Publish extends Command {
             this.error('You are not a collaborator of this repository');
 
         await publish(args.link, user, faustPath);
-        this.log("Branch Created In The Registered Successfully");
+        this.log("Library published in the registerey successfully");
     }
 
 }
