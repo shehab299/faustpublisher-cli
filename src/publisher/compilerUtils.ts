@@ -13,11 +13,11 @@ class FaustCompiler
         this.faustPath = filePath; 
     }
 
-    compileAsync(file, toJson){
+    compileAsync(file, toJson, entry_point) : Promise<string> {
 
         return new Promise((resolve, reject) => {
 
-            let options = [file, '-po'];
+            let options = [file, '-po', '-pn', entry_point];
             
             if(toJson){
                 options.push("-json")
@@ -67,12 +67,18 @@ async function compilePackage(pkgFolder, packageName) {
     const mainfilePath = path.join(pkgFolder, packageName);
     const jsonFilePath = path.join(pkgFolder, packageName + ".json");
 
+    // extract the file library name and remove extenstion
+
+    const regex = /^(.*)\.lib$/;
+    const match = packageName.match(regex);
+    const entry_point = match[1] + "_test";
+
     if (!isPath(mainfilePath)) {
         throw new Errors.CLIError("The package you are trying to publish doesn't have a main file");
     }
 
     try{
-        await compiler.compileAsync(mainfilePath, true);
+        await compiler.compileAsync(mainfilePath, true, entry_point);
     }catch(error){
         throw new Errors.CLIError(error);
     }

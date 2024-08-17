@@ -15,7 +15,7 @@ class Publish extends Command {
     + "\t2- The Repository's name must end with .lib\n"
     + "\t3- The Library file must be named as the repository\n"
     + "\t4- The Library file must be in the root of the repository\n"
-    + "\t5- The Library must have a process function to be able to test it\n"
+    + "\t5- The Library must have an entry pointed named in a specific format '<library_name_without_.lib>'_test to be able to test it\n"
     + "\t6- All your dependencies must follow new faust-pkg format";
 
 

@@ -1,4 +1,4 @@
-import { updateRegistry, publishPackage, downloadPackage, gitCmd, switchToNewBranch } from './gitUtils.js';
+import { updateRegistry, publishPackage, downloadPackage, gitCmd, switchToNewBranch, getRegistryDefaultBranch } from './gitUtils.js';
 import { compilePackage } from './compilerUtils.js';
 import { isPath, mkPath } from '../utils/files.util.js';
 import checkCode from './checkImports.js';
@@ -68,20 +68,21 @@ async function publish(pkgRepo, author, faustPath) : Promise<void>{
 
     const { mainfilePath, version} = await compilePackage(pkgFolder, packageName);
 
+    
     if(!checkCode(mainfilePath)){
         throw new Errors.CLIError("You Are Using Non package imports which is not allowed");
     }
+
 
     if(!checkVersionFormat(version)){
         throw new Errors.CLIError("Invalid Declared Version Format. Make sure to stick to the semver format");
     }
 
-    if(!checkVersion(version, registryPath, author, packageName))
-        throw new Errors.CLIError("The Version you are trying to publish already exists");
 
-    const branchName= `${author}-${packageName}-${version}-${Date.now()}`;
-    
-    switchToNewBranch(git, branchName);
+    if(! await checkVersion(version, registryPath, author, packageName))
+    {
+        throw new Errors.CLIError("The Version you are trying to publish already exists");
+    }
 
     try{
         copyPackageToRegistry(mainfilePath, registryPath, author, packageName, version);
@@ -89,7 +90,7 @@ async function publish(pkgRepo, author, faustPath) : Promise<void>{
         throw new Errors.CLIError("Unexpected Error happened! please try again");
     }
 
-    publishPackage(git, version, branchName);
+    publishPackage(git, version, getRegistryDefaultBranch(git));
 }
 
 

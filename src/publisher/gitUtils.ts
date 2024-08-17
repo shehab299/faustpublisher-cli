@@ -4,10 +4,9 @@ import { Errors } from '@oclif/core';
 
 function run(command) {
     try {
-        execSync(command, {
-            stdio: ['ignore', 'ignore', 'ignore']
-        } );
+        execSync(command);
     } catch (error) {
+        console.error(error);
         throw new Errors.CLIError(`Error while trying to publish`);
     }
 }
@@ -32,7 +31,7 @@ function updateRegistry(git, registryPath, registryUrl) {
 
         run(`${git} clean -fd`);
         run(`${git} checkout -q -f ${registryDefBranch}`);
-        run(`${git} pull origin ${registryDefBranch}`);
+        run(`${git} pull origin ${registryDefBranch} --rebase`);
     }
 }
 
