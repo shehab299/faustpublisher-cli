@@ -1,39 +1,80 @@
-# Faust Publisher CLI
+# Faust Publisher CLI Documentation
 
-The Faust Publisher CLI is used to publish FAUST packages to the FAUST Registry from the command line. It is built using [oclif](https://oclif.io).
+## Overview
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
+The Faust Publisher CLI simplifies the process of publishing Faust packages to the Faust Registry. It automates the workflow, making it easy for contributors to share their libraries with the community.
 
-## Usage
+## How to Contribute Packages to the Faust Public Registry
 
-### Installation
+The Faust community, being small due to Faust's domain-specific nature, requires a simple publishing workflow. This is facilitated by the `faustpublisher` CLI tool.
 
-To install the Faust Publisher CLI globally using npm, run:
+### **Prerequisites:**
+- **Faust with Package Support:** Ensure Faust is installed with package support.
+- **npm (Node Package Manager):** Required to install the `faustpublisher` CLI tool.
 
-```sh
+### **Installing the Publisher:**
+
+Install `faustpublisher` globally using npm:
+```bash
 npm install -g faustpublisher
 ```
 
-### Examples
+### **Logging In:**
 
-After installation, you can use the `faustpublisher` command from any directory.
+Authenticate before publishing:
+```bash
+faustpublisher login
+```
+- If you're already logged in, you'll receive a notification.
+- If not, follow the provided link and code for authorization.
 
-```sh-session
-$ faustpublisher COMMAND
-running command...
+### **Publishing a Library:**
 
-$ faustpublisher --version
-faustpublisher/0.0.0 linux-x64 node-v20.13.1
-
-$ faustpublisher --help [COMMAND]
+To publish your library, use:
+```bash
+faustpublisher publish <github_repo_link>
 ```
 
-## Commands
+### **Repository Requirements for Successful Publishing:**
+- **Collaborator Status:** You must be a collaborator of the repository.
+- **Repository Name:** Must match the library name and end with `.lib`.
+- **Library Location:** The library file should be in the root of the repository.
+- **Entry Point:** The library must have an entry point named `<library_name>_test` for syntax testing. Example:
 
-### `faustpublisher login`
+    ```faust
+    // filename: mylibrary.lib
+
+    // Definitions and functions for the library
+
+    mylibrary_test = _;
+    ```
+- **Versioning:** Ensure the version is updated if republishing.
+
+### **Publishing Structure:**
+The library will be published under your GitHub username in the registry, following this structure:
+```
+username
+    libraryname
+        version
+            libraryname
+```
+
+### **First-Time Publishing:**
+If you're not yet a collaborator, follow these additional steps:
+
+1. **Prepare Your Library:** Ensure it meets repository requirements and is manually prepared.
+2. **Fork the Registry Repository:** Fork and clone the Faust registry repository on GitHub.
+3. **Add Your Library:** Create a directory in your forked repository with the structure `username/libraryname/version/` and place your library file in it.
+4. **Submit a Pull Request:** Commit, push, and create a pull request to the original registry repository.
+5. **Review Process:** Wait for review, address feedback, and await approval.
+6. **Becoming a Collaborator:** Once approved, you'll be invited to become a collaborator, allowing direct publishing.
+7. **Publishing Future Libraries:** As a collaborator, use the `faustpublisher` tool for direct publishing.
+
+
+
+### **Commands**
+
+#### `faustpublisher login`
 
 Logs you into your GitHub account.
 
@@ -48,33 +89,15 @@ EXAMPLES
   $ faustpublisher login
 ```
 
-### `faustpublisher publish GITHUB_LINK`
-
+#### `faustpublisher publish GITHUB_LINK`
 Publishes your libraries to the Faust Registry.
-
 ```
 USAGE
   $ faustpublisher publish LINK
 
 ARGUMENTS
-  LINK  GITHUB Repository link containing the faust library to publish
-
-DESCRIPTION
-  Publish your project to Faust Registry
-
-  In order to publish a library you:
-
-  0- Must be logged in
-  1- Must be a collaborator of the repository
-  2- The Repository's name must end with .lib
-  3- The Library file must be named as the repository
-  4- The Library file must be in the root of the repository
-  5- The Library must have a process function to be able to test it
-  6- All your dependencies must follow new faust-pkg format
+  LINK  GITHUB Repository link containing the Faust library to publish
 
 EXAMPLES
   $ faustpublisher publish https://github.com/shehab299/oscillators.lib
 ```
-
-<!-- commandsstop -->
-
